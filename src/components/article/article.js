@@ -4,6 +4,16 @@ import './article.less'
 // You can read about ES6 modules here: https://exploringjs.com/es6/ch_modules.html#sec_basics-of-es6-modules
 const data = [
   {
+    title: 'Second Times a Charm!',
+    date: 'Mar 9th, 2022',
+    firstParagraph: `I did really enjoy this project the first time I did it, but I had to rely on the solution video more than
+    I would have liked to.`,
+
+    secondParagraph: `This time around I just simply had to reference the guided project, and it only took me about 30 minutes!`,
+
+    thirdParagraph: `BTW, theres a lot Star Wars stuff in this program. I love it.`
+  },
+  {
     title: 'BloomTech Students: "We\'re the best!"',
     date: 'Nov 5th, 2018',
     firstParagraph: `Lucas ipsum dolor sit amet ben twi'lek padmé darth darth darth moff hutt organa twi'lek. Ben amidala secura skywalker lando
@@ -94,6 +104,55 @@ const data = [
   Step 1: Write a component called 'articleMaker' to create an article.
   Your component is a function that takes an article object as its only argument,
   and returns a DOM node looking like the one below:
+
+  */
+ 
+  const articles = document.querySelector('.articles');   //<===== GRABBING THE PARENT ELEMENT FROM THE HTML THAT WE WILL APPEND THE ARTICLES TO
+
+  function articleMaker(data) {
+
+    const articlePanel = document.createElement('div');
+    const articleTitle = document.createElement('h2');
+    const articleDate = document.createElement('p');                //<==== CREATING EACH HTML ELEMENT IN THE DOM
+    const paraOne = document.createElement('p');
+    const paraTwo = document.createElement('p');
+    const paraThree = document.createElement('p');
+    const expandButton = document.createElement('span');
+
+    articlePanel.appendChild(articleTitle);
+    articlePanel.appendChild(articleDate);
+    articlePanel.appendChild(paraOne);                            //<==== PROPERLY STRUCTURING EACH ELEMENT
+    articlePanel.appendChild(paraTwo);
+    articlePanel.appendChild(paraThree);
+    articlePanel.appendChild(expandButton);
+
+    articlePanel.classList.add('article');
+    articleDate.classList.add('date');                    //<==== ADDING THE CLASSES TO THE ELEMENTS THAT HAD CLASS NAMES IN THE HTML
+    expandButton.classList.add('expandButton')
+
+    articleTitle.textContent = data.title;
+    articleDate.textContent = data.date;
+    paraOne.textContent = data.firstParagraph;
+    paraTwo.textContent = data.secondParagraph;          //<==== SETTING THE TEXT CONTENT FOR EACH ELEMENT
+    paraThree.textContent = data.thirdParagraph;
+    expandButton.textContent = '+';
+
+    expandButton.addEventListener('click', () => {           //<==== ADDING FUNCTIONALITY TO THE EXPANDBUTTON
+      articlePanel.classList.toggle('article-open');
+    })
+
+    return articlePanel;                                  //<==== RETURNING THE NEWLY MADE ARTICLE
+  }
+
+
+
+  data.forEach(elem => {                            //<==== LOOPING THROUGH THE DATA
+    const articleElem = articleMaker(elem);         //<==== DECLARING A VARIABLE THAT'S WILL BE CREATED WITH OUR ARTICLEMAKER   
+    articles.appendChild(articleElem);              //<==== CALLING OUR PARENT AND THEN APPENDING OUR NEW ARTICLE TO IT
+  })
+
+  /*
+
 
   <div class="article">
     <h2>{title of the article}</h2>
